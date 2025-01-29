@@ -11,7 +11,7 @@ function Navbar() {
   };
 
   return (
-    <nav className="bg-green-700 text-white p-2 shadow-lg">
+    <nav className="bg-emerald-700 text-white p-2 shadow-lg">
       <div className="container mx-auto flex justify-center items-center">
         <div className="flex space-x-4">
           <Link 

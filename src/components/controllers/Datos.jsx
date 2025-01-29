@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Line, Doughnut } from 'react-chartjs-2';
-import { ChartSquare } from 'lucide-react';
 import {
   Chart as ChartJS,
   Title,
@@ -98,7 +97,6 @@ export default function Datos() {
       <div className="max-w-7xl mx-auto">
         <div className="bg-white rounded-2xl shadow-xl p-8 mb-6">
           <div className="flex items-center gap-3 mb-8">
-            <ChartSquare className="w-8 h-8 text-emerald-600" />
             <h2 className="text-2xl font-bold text-gray-800">
               Datos del Mercado Trading
             </h2>
