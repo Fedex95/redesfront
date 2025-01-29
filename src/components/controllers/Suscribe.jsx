@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Loader, CheckCircle, Radio } from "lucide-react";
+import { Loader2, Radio, MessageSquareDashed, History } from "lucide-react";
 import { motion } from "framer-motion";
 import axios from "axios";
 import { toast } from 'react-toastify';
@@ -51,57 +51,81 @@ function SubscribeTopic({ credentials }) {
   }, [topic]);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-green-100">
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="bg-green-200 shadow-lg rounded-lg p-6 w-full max-w-md"
-      >
-        <h2 className="text-2xl font-semibold text-green-600 mb-4 text-center">
-          Suscripcion
-        </h2>
-        <div className="mt-4">
-          <input
-            type="text"
-            placeholder="Topic"
-            value={topic}
-            onChange={(e) => setTopic(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none"
-          />
-        </div>
-        <button
-          onClick={handleSubscribe}
-          disabled={isLoading}
-          className="mt-4 w-full flex items-center justify-center gap-2 px-4 py-2 bg-green-500 text-white font-semibold rounded-lg shadow hover:bg-green-600 transition duration-200 disabled:opacity-50"
-          >
-            <>
-            <Radio className="text-white-500" />
-            Listo
-            </>  
-        </button>
-      </motion.div>
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.3, duration: 0.5 }}
-        className="mt-8 w-full max-w-lg"
-      >
-        <h3 className="text-2xl font-semibold text-green-600 mb-4 text-center">Historial:</h3>
-        <ul className="mt-4 space-y-2">
-          {messages.map((msg, index) => (
-            <motion.li
-              key={index}
-              initial={{ opacity: 0, x: -10 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.2 }}
-              className="bg-gray-200 px-4 py-2 rounded-lg shadow"
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-teal-100 p-6">
+      <div className="max-w-xl mx-auto space-y-6">
+        <div className="bg-white rounded-2xl shadow-xl p-8">
+          <div className="flex items-center gap-3 mb-8">
+            <MessageSquareDashed className="w-8 h-8 text-emerald-600" />
+            <h2 className="text-2xl font-bold text-gray-800">
+              Suscripción
+            </h2>
+          </div>
+
+          <div className="space-y-6">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Tópico
+              </label>
+              <div className="relative">
+                <input
+                  type="text"
+                  value={topic}
+                  onChange={(e) => setTopic(e.target.value)}
+                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-200 outline-none"
+                  placeholder="Ingresa el tópico..."
+                />
+              </div>
+            </div>
+
+            <button
+              onClick={handleSubscribe}
+              disabled={isLoading}
+              className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium px-6 py-3 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
             >
-              {msg}
-            </motion.li>
-          ))}
-        </ul>
-      </motion.div>
+              {isLoading ? (
+                <>
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                  <span>Suscribiendo...</span>
+                </>
+              ) : (
+                <>
+                  <Radio className="w-5 h-5" />
+                  <span>Suscribirse</span>
+                </>
+              )}
+            </button>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-2xl shadow-xl p-8">
+          <div className="flex items-center gap-3 mb-6">
+            <History className="w-6 h-6 text-emerald-600" />
+            <h3 className="text-xl font-bold text-gray-800">
+              Historial de Mensajes
+            </h3>
+          </div>
+          
+          <div className="space-y-3">
+            {messages.length === 0 ? (
+              <p className="text-gray-500 text-center py-4">
+                No hay mensajes recibidos
+              </p>
+            ) : (
+              messages.map((msg, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="bg-gray-50 px-4 py-3 rounded-xl border border-gray-200"
+                >
+                  {msg}
+                </motion.div>
+              ))
+            )}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

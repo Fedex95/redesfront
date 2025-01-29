@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
-import { User, Lock } from "lucide-react";
-import { useNavigate, Link  } from "react-router-dom";
+import { User, Lock, LogIn } from "lucide-react";
+import { useNavigate, Link } from "react-router-dom";
 import { toast } from 'react-toastify';
 
 function Login({ setIsLoggedIn, setCredentials }) {
@@ -34,53 +34,80 @@ function Login({ setIsLoggedIn, setCredentials }) {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-green-200">
-  <div className="w-[300px] h-[350px] p-8 bg-green-500 shadow-lg rounded-lg">
-    <h1 className="text-2xl font-bold text-center text-white mb-6">
-          Iniciar Sesión
-        </h1>
-        <div className="space-y-6">
-          <div className="relative">
-            <User className="absolute top-1/2 left-3 transform -translate-y-1/2 text-gray-400" />
-            <input
-              type="text"
-              placeholder="Usuario"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border rounded-lg text-gray-500 font-bold focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent"
-            />
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-teal-100 flex items-center justify-center p-6">
+      <div className="w-full max-w-md">
+        <div className="bg-white rounded-2xl shadow-xl p-8">
+          <div className="flex items-center gap-3 mb-8">
+            <LogIn className="w-8 h-8 text-emerald-600" />
+            <h1 className="text-2xl font-bold text-gray-800">
+              Iniciar Sesión
+            </h1>
           </div>
-          <div className="relative">
-            <Lock className="absolute top-1/2 left-3 transform -translate-y-1/2 text-gray-400" />
-            <input
-              type="password"
-              placeholder="Contraseña"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none text-gray-500 focus:ring-2 focus:ring-green-400 focus:border-transparent"
-            />
+
+          <div className="space-y-6">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Usuario
+              </label>
+              <div className="relative">
+                <User className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <input
+                  type="text"
+                  placeholder="Ingresa tu usuario"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  className="w-full pl-10 px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-200 outline-none"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Contraseña
+              </label>
+              <div className="relative">
+                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <input
+                  type="password"
+                  placeholder="Ingresa tu contraseña"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full pl-10 px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-200 outline-none"
+                />
+              </div>
+            </div>
+
+            <button
+              onClick={handleLogin}
+              disabled={loading}
+              className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium px-6 py-3 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+            >
+              {loading ? (
+                <>
+                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  <span>Cargando...</span>
+                </>
+              ) : (
+                <>
+                  <LogIn className="w-5 h-5" />
+                  <span>Iniciar Sesión</span>
+                </>
+              )}
+            </button>
+
+            <p className="text-center text-gray-600">
+              ¿No tienes una cuenta?{" "}
+              <Link 
+                to="/register" 
+                className="text-emerald-600 hover:text-emerald-700 font-medium transition-colors duration-200"
+              >
+                Regístrate aquí
+              </Link>
+            </p>
           </div>
-          <button
-            onClick={handleLogin}
-            disabled={loading}
-            className={`w-full py-2 text-white bg-green-600 font-bold rounded-lg transition duration-300 ${
-              loading
-                ? "bg-green-300 cursor-not-allowed"
-                : "bg-green-500 hover:bg-green-800"
-            }`}
-          >
-            {loading ? "Cargando..." : "Iniciar Sesión"}
-          </button>
         </div>
-        <p className="mt-4 text-center text-white font-bold">
-          ¿No tienes una cuenta?{" "}
-          <Link to="/register" className="text-white font-bold hover:underline">
-            Regístrate aquí
-          </Link>
-        </p>
       </div>
     </div>
-    
   );
 }
 
